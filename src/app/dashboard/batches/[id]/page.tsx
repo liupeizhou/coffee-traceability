@@ -90,7 +90,7 @@ export default function BatchDetailPage() {
   // 检查是否有待审核的删除请求
   const hasPendingDelete = batch?.deleteRequests && batch.deleteRequests.length > 0;
 
-  const userRole = (session?.user as any)?.role || "";
+  const userRole = session?.user?.role || "";
 
   useEffect(() => {
     if (params.id) {

@@ -99,7 +99,7 @@ export default function WarehousesPage() {
     );
   }
 
-  const userRole = (session.user as any).role;
+  const userRole = session.user?.role || "";
   const canManage = ["ADMIN", "PROCESSOR", "WAREHOUSE_MANAGER"].includes(userRole);
 
   return (

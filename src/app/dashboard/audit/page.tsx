@@ -52,7 +52,7 @@ export default function AuditPage() {
   const [processing, setProcessing] = useState<string | null>(null);
 
   // 获取当前用户ID
-  const currentUserId = (session?.user as any)?.id;
+  const currentUserId = session?.user?.id || "";
 
   useEffect(() => {
     fetchData();
@@ -136,7 +136,7 @@ export default function AuditPage() {
     );
   }
 
-  const userRole = (session.user as any).role;
+  const userRole = session.user?.role || "";
   if (userRole !== "ADMIN") {
     return (
       <div className="min-h-screen flex items-center justify-center">
