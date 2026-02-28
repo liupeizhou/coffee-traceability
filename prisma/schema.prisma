@@ -1,0 +1,186 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+// 用户角色枚举
+model User {
+  id           String    @id @default(cuid())
+  email        String    @unique
+  password     String    // 加密存储
+  name         String?
+  phone        String    @default("") // 手机号
+  role         String    @default("FARMER") // ADMIN, GOVERNMENT, FARMER, PROCESSOR, ROASTER, CAFE, WAREHOUSE_MANAGER
+  organization String?
+  status       String    @default("APPROVED") // PENDING: 待审核, APPROVED: 已批准, REJECTED: 已拒绝
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+  batches      Batch[]
+  warehouses   Warehouse[]
+}
+
+// 批次表 (核心)
+model Batch {
+  id              String            @id @default(cuid())
+  batchNumber     String            @unique // 唯一追溯码
+  skuName         String?           // 商品名称
+  currentStage    String            @default("PLANTING") // 当前阶段
+  status          String            @default("ACTIVE")
+
+  plantingId      String?           @unique
+  plantingRecord  PlantingRecord?   @relation(fields: [plantingId], references: [id])
+
+  processingId    String?           @unique
+  processingRecord ProcessingRecord? @relation(fields: [processingId], references: [id])
+
+  storageId       String?           @unique
+  storageRecord   StorageRecord?    @relation(fields: [storageId], references: [id])
+
+  roastingId      String?           @unique
+  roastingRecord  RoastingRecord?   @relation(fields: [roastingId], references: [id])
+
+  createdById     String?
+  createdBy       User?             @relation(fields: [createdById], references: [id])
+
+  createdAt       DateTime          @default(now())
+  updatedAt       DateTime          @updatedAt
+
+  // 删除请求关联
+  deleteRequests  DeleteRequest[]
+
+  @@index([batchNumber])
+  @@index([createdById])
+  @@index([currentStage])
+}
+
+// 种植记录
+model PlantingRecord {
+  id              String    @id @default(cuid())
+  farmLocation    String
+  altitude        Float?
+  sunlightHours   Float?
+  tempDifference  Float?
+  rainfall        Float?
+  soilData        String?   // JSON string
+  harvestTime     DateTime
+  harvestQuantity Float?
+  qualityGrade    String?
+  batch           Batch?    @relation
+}
+
+// 加工记录
+model ProcessingRecord {
+  id              String    @id @default(cuid())
+  method          String    // WASHED, NATURAL, HONEY, CARBONIC_MACERATION, OTHER
+  startDate       DateTime
+  endDate         DateTime?
+  durationHours   Float?
+  phValue         String?   // JSON string
+  temperature     Float?
+  notes           String?
+  batch           Batch?    @relation
+}
+
+// 仓储记录
+model StorageRecord {
+  id               String    @id @default(cuid())
+  warehouseName    String?
+  warehouseAddress  String?
+  entryDate        DateTime?
+  exitDate         DateTime?
+  conditions       String?
+  temperature      Float?
+  humidity         Float?
+  storageDuration  Int?
+  moisture         Float?
+  waterActivity    Float?
+  density          Float?
+  batch            Batch?    @relation
+}
+
+// 烘焙记录
+model RoastingRecord {
+  id              String    @id @default(cuid())
+  machineName     String?
+  roastDate       DateTime?
+  roastCurveImg   String?
+  roastCurveData  String?   // JSON string
+  agtronBean      Float?
+  agtronGround    Float?
+  cuppingScore    Float?
+  cuppingNotes    String?
+  cuppingFlavors  String?
+  batch           Batch?    @relation
+}
+
+// 仓库表
+model Warehouse {
+  id           String   @id @default(cuid())
+  name         String   // 仓库名称
+  address      String?  // 仓库地址
+  description  String?  // 仓库描述
+  capacity     Float?   // 容量(kg)
+  temperature  Float?   // 恒温温度
+  humidity     Float?   // 恒湿百分比
+  isActive     Boolean  @default(true)
+  createdById  String?
+  createdBy    User?    @relation(fields: [createdById], references: [id])
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
+
+// 操作日志表
+model OperationLog {
+  id              String   @id @default(cuid())
+  batchId         String
+  batchNumber     String
+  stage           String   // 阶段: PLANTING, PROCESSING, STORAGE, ROASTING, BATCH
+  action          String   // 操作: CREATE, UPDATE, DELETE, LOGIN, LOGOUT, EXPORT
+  module          String?  // 模块: BATCH, PLANTING, PROCESSING, STORAGE, ROASTING, USER, WAREHOUSE
+  userId          String
+  userName        String?
+  userEmail       String?
+  userRole        String
+  ipAddress       String?  // IP 地址
+  userAgent       String?  // 用户代理
+  oldData         String?  // 修改前的数据
+  newData         String?  // 修改后的数据
+  description     String?  // 操作描述
+  status          String?  // 操作状态: SUCCESS, FAILED
+  errorMessage    String?  // 错误信息
+  duration        Int?     // 操作耗时(毫秒)
+  createdAt       DateTime @default(now())
+
+  @@index([batchId])
+  @@index([userId])
+  @@index([stage])
+  @@index([action])
+  @@index([createdAt])
+}
+
+// 删除审核表
+model DeleteRequest {
+  id            String   @id @default(cuid())
+  batchId       String
+  batch         Batch    @relation(fields: [batchId], references: [id])
+  batchNumber   String
+  stage         String   // 要删除的阶段
+  userId        String
+  userName      String?
+  userEmail     String?
+  reason        String?
+  status        String   @default("PENDING") // PENDING, APPROVED, REJECTED
+  reviewerId    String?
+  reviewerName  String?
+  reviewNote    String?
+  reviewedAt   DateTime?
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
