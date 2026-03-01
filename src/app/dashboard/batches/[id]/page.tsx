@@ -7,68 +7,68 @@ import Link from "next/link";
 import { methodLabels, stageLabelsWithEnglish, canEditStage, canDeleteStage } from "@/lib/constants";
 
 interface PlantingRecord {
-  id: string;
-  farmLocation: string;
-  altitude: number | null;
-  sunlightHours: number | null;
-  tempDifference: number | null;
-  rainfall: number | null;
-  soilData: string | null;
-  harvestTime: Date;
-  harvestQuantity: number | null;
-  qualityGrade: string | null;
+  readonly id: string;
+  readonly farmLocation: string;
+  readonly altitude: number | null;
+  readonly sunlightHours: number | null;
+  readonly tempDifference: number | null;
+  readonly rainfall: number | null;
+  readonly soilData: string | null;
+  readonly harvestTime: Date;
+  readonly harvestQuantity: number | null;
+  readonly qualityGrade: string | null;
 }
 
 interface ProcessingRecord {
-  id: string;
-  method: string;
-  startDate: Date;
-  endDate: Date | null;
-  durationHours: number | null;
-  phValue: string | null;
-  temperature: number | null;
-  notes: string | null;
+  readonly id: string;
+  readonly method: string;
+  readonly startDate: Date;
+  readonly endDate: Date | null;
+  readonly durationHours: number | null;
+  readonly phValue: string | null;
+  readonly temperature: number | null;
+  readonly notes: string | null;
 }
 
 interface StorageRecord {
-  id: string;
-  warehouseName: string | null;
-  warehouseAddress: string | null;
-  entryDate: Date | null;
-  exitDate: Date | null;
-  conditions: string | null;
-  temperature: number | null;
-  humidity: number | null;
-  storageDuration: number | null;
-  moisture: number | null;
-  waterActivity: number | null;
-  density: number | null;
+  readonly id: string;
+  readonly warehouseName: string | null;
+  readonly warehouseAddress: string | null;
+  readonly entryDate: Date | null;
+  readonly exitDate: Date | null;
+  readonly conditions: string | null;
+  readonly temperature: number | null;
+  readonly humidity: number | null;
+  readonly storageDuration: number | null;
+  readonly moisture: number | null;
+  readonly waterActivity: number | null;
+  readonly density: number | null;
 }
 
 interface RoastingRecord {
-  id: string;
-  machineName: string | null;
-  roastDate: Date | null;
-  roastCurveImg: string | null;
-  roastCurveData: string | null;
-  agtronBean: number | null;
-  agtronGround: number | null;
-  cuppingScore: number | null;
-  cuppingNotes: string | null;
-  cuppingFlavors: string | null;
+  readonly id: string;
+  readonly machineName: string | null;
+  readonly roastDate: Date | null;
+  readonly roastCurveImg: string | null;
+  readonly roastCurveData: string | null;
+  readonly agtronBean: number | null;
+  readonly agtronGround: number | null;
+  readonly cuppingScore: number | null;
+  readonly cuppingNotes: string | null;
+  readonly cuppingFlavors: string | null;
 }
 
 interface BatchDetail {
-  id: string;
-  batchNumber: string;
-  skuName: string | null;
-  currentStage: string;
-  status: string;
-  plantingRecord: PlantingRecord | null;
-  processingRecord: ProcessingRecord | null;
-  storageRecord: StorageRecord | null;
-  roastingRecord: RoastingRecord | null;
-  deleteRequests: { id: string; status: string }[];
+  readonly id: string;
+  readonly batchNumber: string;
+  readonly skuName: string | null;
+  readonly currentStage: string;
+  readonly status: string;
+  readonly plantingRecord: PlantingRecord | null;
+  readonly processingRecord: ProcessingRecord | null;
+  readonly storageRecord: StorageRecord | null;
+  readonly roastingRecord: RoastingRecord | null;
+  readonly deleteRequests: readonly { readonly id: string; readonly status: string }[];
 }
 
 

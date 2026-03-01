@@ -7,22 +7,22 @@ import Link from "next/link";
 import { stageLabels, roleLabels } from "@/lib/constants";
 
 interface Batch {
-  id: string;
-  batchNumber: string;
-  currentStage: string;
-  createdAt: string;
-  createdBy: { name: string | null; email: string | null; role: string } | null;
+  readonly id: string;
+  readonly batchNumber: string;
+  readonly currentStage: string;
+  readonly createdAt: string;
+  readonly createdBy: { readonly name: string | null; readonly email: string | null; readonly role: string } | null;
 }
 
 interface Stats {
-  totalBatches: number;
-  totalUsers: number;
-  completedRoasting: number;
-  pendingProcessing: number;
-  batchesByStage: { currentStage: string; _count: { currentStage: number } }[];
-  batchesByCreator: { createdById: string | null; _count: { createdById: number } }[];
-  batches: Batch[];
-  users: { id: string; name: string | null; email: string | null; role: string }[];
+  readonly totalBatches: number;
+  readonly totalUsers: number;
+  readonly completedRoasting: number;
+  readonly pendingProcessing: number;
+  readonly batchesByStage: readonly { readonly currentStage: string; readonly _count: { readonly currentStage: number } }[];
+  readonly batchesByCreator: readonly { readonly createdById: string | null; readonly _count: { readonly createdById: number } }[];
+  readonly batches: readonly Batch[];
+  readonly users: readonly { readonly id: string; readonly name: string | null; readonly email: string | null; readonly role: string }[];
 }
 
 export default function StatsPage() {

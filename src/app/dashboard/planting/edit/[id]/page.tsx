@@ -6,16 +6,16 @@ import { useSearchParams, useRouter, useParams } from "next/navigation";
 import Link from "next/link";
 
 interface PlantingRecord {
-  id: string;
-  farmLocation: string;
-  altitude: number | null;
-  sunlightHours: number | null;
-  tempDifference: number | null;
-  rainfall: number | null;
-  soilData: string | null;
-  harvestTime: string;
-  harvestQuantity: number | null;
-  qualityGrade: string | null;
+  readonly id: string;
+  readonly farmLocation: string;
+  readonly altitude: number | null;
+  readonly sunlightHours: number | null;
+  readonly tempDifference: number | null;
+  readonly rainfall: number | null;
+  readonly soilData: string | null;
+  readonly harvestTime: string;
+  readonly harvestQuantity: number | null;
+  readonly qualityGrade: string | null;
 }
 
 function EditPlantingContent() {

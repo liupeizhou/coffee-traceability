@@ -6,17 +6,17 @@ import Link from "next/link";
 import { stageLabels } from "@/lib/constants";
 
 interface TraceData {
-  batchNumber: string;
-  skuName: string | null;
-  currentStage: string;
-  status: string;
-  producer: string;
-  timeline: Array<{
-    stage: string;
-    title: string;
-    date: string | null;
-    data: Record<string, unknown>;
-  }>;
+  readonly batchNumber: string;
+  readonly skuName: string | null;
+  readonly currentStage: string;
+  readonly status: string;
+  readonly producer: string;
+  readonly timeline: readonly {
+    readonly stage: string;
+    readonly title: string;
+    readonly date: string | null;
+    readonly data: Record<string, unknown>;
+  }[];
 }
 
 export default function TraceResultPage() {

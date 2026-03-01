@@ -6,17 +6,17 @@ import Link from "next/link";
 import { regionCodes, stageLabels } from "@/lib/constants";
 
 interface Batch {
-  id: string;
-  batchNumber: string;
-  skuName: string | null;
-  currentStage: string;
-  status: string;
-  createdAt: string;
-  createdBy: {
-    name: string | null;
-    organization: string | null;
+  readonly id: string;
+  readonly batchNumber: string;
+  readonly skuName: string | null;
+  readonly currentStage: string;
+  readonly status: string;
+  readonly createdAt: string;
+  readonly createdBy: {
+    readonly name: string | null;
+    readonly organization: string | null;
   } | null;
-  deleteRequests: { id: string; status: string }[];
+  readonly deleteRequests: readonly { readonly id: string; readonly status: string }[];
 }
 
 type SortField = "batchNumber" | "currentStage" | "status" | "createdAt";

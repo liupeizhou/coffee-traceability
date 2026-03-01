@@ -5,15 +5,15 @@ import { useSession } from "next-auth/react";
 import Link from "next/link";
 
 interface Warehouse {
-  id: string;
-  name: string;
-  address: string | null;
-  description: string | null;
-  capacity: number | null;
-  temperature: number | null;
-  humidity: number | null;
-  isActive: boolean;
-  createdAt: string;
+  readonly id: string;
+  readonly name: string;
+  readonly address: string | null;
+  readonly description: string | null;
+  readonly capacity: number | null;
+  readonly temperature: number | null;
+  readonly humidity: number | null;
+  readonly isActive: boolean;
+  readonly createdAt: string;
 }
 
 export default function WarehousesPage() {

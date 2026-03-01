@@ -6,9 +6,9 @@ import { useSearchParams, useRouter } from "next/navigation";
 import Link from "next/link";
 
 interface Warehouse {
-  id: string;
-  name: string;
-  address: string | null;
+  readonly id: string;
+  readonly name: string;
+  readonly address: string | null;
 }
 
 function NewStorageContent() {

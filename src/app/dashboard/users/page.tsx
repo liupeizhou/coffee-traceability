@@ -5,14 +5,14 @@ import { useSession } from "next-auth/react";
 import Link from "next/link";
 
 interface User {
-  id: string;
-  email: string;
-  name: string | null;
-  phone: string;
-  role: string;
-  organization: string | null;
-  status: string;
-  createdAt: string;
+  readonly id: string;
+  readonly email: string;
+  readonly name: string | null;
+  readonly phone: string;
+  readonly role: string;
+  readonly organization: string | null;
+  readonly status: string;
+  readonly createdAt: string;
 }
 
 const roleLabels: Record<string, string> = {

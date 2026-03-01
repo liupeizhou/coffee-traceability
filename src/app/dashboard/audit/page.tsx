@@ -6,40 +6,40 @@ import Link from "next/link";
 import { stageLabelsWithRecord } from "@/lib/constants";
 
 interface DeleteRequest {
-  id: string;
-  batchId: string;
-  batchNumber: string;
-  stage: string;
-  userId: string;
-  userName: string | null;
-  userEmail: string | null;
-  reason: string | null;
-  status: string;
-  reviewerName: string | null;
-  reviewNote: string | null;
-  reviewedAt: string | null;
-  createdAt: string;
+  readonly id: string;
+  readonly batchId: string;
+  readonly batchNumber: string;
+  readonly stage: string;
+  readonly userId: string;
+  readonly userName: string | null;
+  readonly userEmail: string | null;
+  readonly reason: string | null;
+  readonly status: string;
+  readonly reviewerName: string | null;
+  readonly reviewNote: string | null;
+  readonly reviewedAt: string | null;
+  readonly createdAt: string;
 }
 
 interface OperationLog {
-  id: string;
-  batchId: string;
-  batchNumber: string;
-  stage: string;
-  action: string;
-  module: string | null;
-  userName: string | null;
-  userEmail: string | null;
-  userRole: string;
-  ipAddress: string | null;
-  userAgent: string | null;
-  oldData: string | null;
-  newData: string | null;
-  description: string | null;
-  status: string | null;
-  errorMessage: string | null;
-  duration: number | null;
-  createdAt: string;
+  readonly id: string;
+  readonly batchId: string;
+  readonly batchNumber: string;
+  readonly stage: string;
+  readonly action: string;
+  readonly module: string | null;
+  readonly userName: string | null;
+  readonly userEmail: string | null;
+  readonly userRole: string;
+  readonly ipAddress: string | null;
+  readonly userAgent: string | null;
+  readonly oldData: string | null;
+  readonly newData: string | null;
+  readonly description: string | null;
+  readonly status: string | null;
+  readonly errorMessage: string | null;
+  readonly duration: number | null;
+  readonly createdAt: string;
 }
 
 export default function AuditPage() {
